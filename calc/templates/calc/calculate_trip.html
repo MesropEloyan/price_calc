@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Калькулятор стоимости перевозки</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    form {
+      width: 50%;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .result {
+      background-color: #eee;
+      padding: 10px;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>Калькулятор стоимости перевозки</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {% if field.errors %}
+        <span class="error">{{ field.errors }}</span>
+      {% endif %}
+      {{ field }}
+    {% endfor %}
+    <input type="submit" value="Рассчитать стоимость">
+  </form>
+  {% if trip_cost %}
+    <div class="result">
+      Стоимость перевозки: ${{ trip_cost }}
+    </div>
+  {% endif %}
+</body>
+</html>
